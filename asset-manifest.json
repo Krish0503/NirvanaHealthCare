@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/NirvanaHealthCare/static/css/main.e22dcf72.css",
+    "main.js": "/NirvanaHealthCare/static/js/main.e55e77d9.js",
+    "index.html": "/NirvanaHealthCare/index.html",
+    "main.e22dcf72.css.map": "/NirvanaHealthCare/static/css/main.e22dcf72.css.map",
+    "main.e55e77d9.js.map": "/NirvanaHealthCare/static/js/main.e55e77d9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e22dcf72.css",
+    "static/js/main.e55e77d9.js"
+  ]
+}

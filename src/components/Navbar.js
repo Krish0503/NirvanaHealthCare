@@ -1,18 +1,37 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "../styles/global.css";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/Navbar.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    navigate('/login');
+  };
+
   return (
     <nav className="navbar">
-      <h1>Nirvana Healthcare</h1>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/dashboard">Dashboard</Link></li>
-        <li><Link to="/symptom-checker">Symptom Checker</Link></li>
-        <li><Link to="/hospital-locator">Hospitals</Link></li>
-        <li><Link to="/video-call">Video Call</Link></li>
-      </ul>
+      <div className="navbar-brand">
+        <Link to="/" className="brand-link">
+          <h1>Nirvana Healthcare</h1>
+        </Link>
+      </div>
+      
+      <div className="navbar-links">
+        <Link to="/" className="nav-link">Home</Link>
+        <Link to="/dashboard" className="nav-link">Dashboard</Link>
+        <Link to="/symptom-checker" className="nav-link">Symptom Checker</Link>
+        <Link to="/patient-records" className="nav-link">Patient Records</Link>
+        <Link to="/hospital-locator" className="nav-link">Hospitals</Link>
+        <Link to="/video-call" className="nav-link">Video Call</Link>
+      </div>
+
+      <div className="navbar-actions">
+        <button onClick={handleLogout} className="logout-button">
+          Logout
+        </button>
+      </div>
     </nav>
   );
 };

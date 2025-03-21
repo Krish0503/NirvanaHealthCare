@@ -1,33 +1,23 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
-import SymptomChecker from "./components/SymptomChecker";
-import PatientRecords from "./components/PatientRecords";
-import HospitalLocator from "./components/HospitalLocator";
-import VideoCall from "./components/VideoCall";
-import "./styles/global.css";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard"; // Import Dashboard
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/symptom-checker" element={<SymptomChecker />} />
-        <Route path="/patient-records" element={<PatientRecords />} />
-        <Route path="/hospital-locator" element={<HospitalLocator />} />
-        <Route path="/video-call" element={<VideoCall />} />
-      </Routes>
-      <Footer />
-    </>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </div>
+    </Router>
   );
-  
-
 }
 
-
 export default App;
+

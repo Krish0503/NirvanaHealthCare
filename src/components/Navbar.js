@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import LoginForm from "./LoginForm";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
@@ -28,6 +29,7 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-actions">
+        <LoginForm />
         <button onClick={handleLogout} className="logout-button">
           Logout
         </button>

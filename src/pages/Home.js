@@ -7,7 +7,7 @@ const Home = () => {
     <div className="home-container">
       <section className="hero-section">
         <h1>Welcome to Nirvana Healthcare</h1>
-        <p>Your trusted partner in healthcare management</p>
+        <p>Achieve Wellness, Attain Nirvana</p>
         <div className="hero-buttons">
           <Link to="/dashboard" className="primary-button">Go to Dashboard</Link>
           <Link to="/symptom-checker" className="secondary-button">Check Symptoms</Link>

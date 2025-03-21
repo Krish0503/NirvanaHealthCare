@@ -46,6 +46,9 @@
 
 .navbar-actions {
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .logout-button {
@@ -81,5 +84,14 @@
   .nav-link {
     padding: 0.5rem;
     font-size: 0.9rem;
+  }
+
+  .navbar-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .login-form {
+    width: 100%;
   }
 } 

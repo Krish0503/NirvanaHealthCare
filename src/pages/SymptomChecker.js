@@ -4,7 +4,7 @@ import axios from "axios";
 const SymptomChecker = () => {
   const [messages, setMessages] = useState([{ sender: "bot", text: "Hi! Describe your symptoms." }]);
   const [input, setInput] = useState("");
-  const API_KEY = "your-groq-api-key"; // Replace with your actual Groq API Key
+  const API_KEY = import.meta.env.REACT_APP_GROQ_API_KEY; // Replace with your actual Groq API Key
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;

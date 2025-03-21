@@ -4,10 +4,20 @@
   margin: 0 auto;
 }
 
-.dashboard-container h1 {
-  color: #2c3e50;
+.dashboard-header {
+  text-align: center;
   margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+  color: #2c3e50;
   font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
 }
 
 .dashboard-grid {
@@ -24,8 +34,8 @@
 }
 
 .dashboard-section h2 {
-  color: #34495e;
-  margin-bottom: 1rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
   font-size: 1.5rem;
 }
 
@@ -38,21 +48,68 @@
 
 .stat-card {
   background: #f8f9fa;
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 8px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.3s ease;
 }
 
-.stat-card h3 {
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  background: #e8f4f8;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.stat-info h3 {
   color: #7f8c8d;
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
 
 .stat-number {
-  font-size: 2rem;
+  color: #2c3e50;
+  font-size: 1.8rem;
   font-weight: bold;
-  color: #3498db;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.action-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover {
+  background: #e8f4f8;
+  transform: translateY(-3px);
+}
+
+.action-icon {
+  font-size: 2rem;
 }
 
 /* Activities List */
@@ -65,9 +122,10 @@
 .activity-item {
   display: flex;
   justify-content: space-between;
-  padding: 0.75rem;
+  align-items: center;
+  padding: 1rem;
   background: #f8f9fa;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .activity-date {
@@ -77,43 +135,23 @@
 
 .activity-description {
   color: #2c3e50;
-}
-
-/* Quick Actions */
-.quick-actions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.action-button {
-  padding: 0.75rem 1rem;
-  background: #3498db;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.action-button:hover {
-  background: #2980b9;
+  font-weight: 500;
 }
 
 /* Reminders List */
 .reminders-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .reminder-item {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem;
+  padding: 1rem;
   background: #f8f9fa;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .reminder-icon {
@@ -124,6 +162,10 @@
 @media (max-width: 768px) {
   .dashboard-container {
     padding: 1rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.75rem;
   }
 
   .stats-grid {

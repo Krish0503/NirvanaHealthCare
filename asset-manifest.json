@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/NirvanaHealthCare/static/css/main.7e5e3e8a.css",
-    "main.js": "/NirvanaHealthCare/static/js/main.7444a4d9.js",
+    "main.css": "/NirvanaHealthCare/static/css/main.bc2d81c4.css",
+    "main.js": "/NirvanaHealthCare/static/js/main.9d3a813e.js",
     "index.html": "/NirvanaHealthCare/index.html",
-    "main.7e5e3e8a.css.map": "/NirvanaHealthCare/static/css/main.7e5e3e8a.css.map",
-    "main.7444a4d9.js.map": "/NirvanaHealthCare/static/js/main.7444a4d9.js.map"
+    "main.bc2d81c4.css.map": "/NirvanaHealthCare/static/css/main.bc2d81c4.css.map",
+    "main.9d3a813e.js.map": "/NirvanaHealthCare/static/js/main.9d3a813e.js.map"
   },
   "entrypoints": [
-    "static/css/main.7e5e3e8a.css",
-    "static/js/main.7444a4d9.js"
+    "static/css/main.bc2d81c4.css",
+    "static/js/main.9d3a813e.js"
   ]
 }

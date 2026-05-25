@@ -23,7 +23,7 @@ const SymptomChecker = () => {
     medications: []
   });
   const messagesEndRef = useRef(null);
-  const API_KEY = process.env.REACT_APP_GROQ_API_KEY;
+  const API_KEY = process.env.REACT_APP_GEMINI_API_KEY || process.env.REACT_APP_GROQ_API_KEY;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -45,45 +45,89 @@ const SymptomChecker = () => {
         throw new Error("API key not found. Please check your environment variables.");
       }
 
-      // Prepare the conversation history for context
-      const conversationHistory = messages.map(msg => ({
-        role: msg.sender === "user" ? "user" : "assistant",
-        content: msg.text
-      }));
+      let botText = "";
 
-      // Add system message with context
-      const systemMessage = {
-        role: "system",
-        content: `You are Sathi, a helpful and empathetic medical AI assistant. Provide general health information and suggest when to seek medical attention. 
+      if (API_KEY.startsWith("AIzaSy")) {
+        // Use Google Gemini API
+        const systemInstruction = `You are Sathi, a helpful and empathetic medical AI assistant. Provide general health information and suggest when to seek medical attention. 
         Current patient context: ${JSON.stringify(conversationContext)}.
         Always remind users that you are an AI and they should consult healthcare professionals for medical advice.
         Be conversational, friendly, and culturally sensitive while maintaining professionalism.
-        Use a warm and caring tone, and occasionally use Hindi/Indian English phrases to make the conversation more relatable.`
-      };
+        Use a warm and caring tone, and occasionally use Hindi/Indian English phrases to make the conversation more relatable.`;
 
-      const response = await axios.post(
-        "https://api.groq.com/v1/chat/completions",
-        {
-          model: "mixtral-8x7b-32768",
-          messages: [
-            systemMessage,
-            ...conversationHistory,
-            { role: "user", content: input }
-          ],
-          max_tokens: 500,
-          temperature: 0.7,
-        },
-        {
-          headers: { 
-            Authorization: `Bearer ${API_KEY}`, 
-            "Content-Type": "application/json" 
+        const contents = [];
+        // Skip index 0 (welcome bot message) to ensure history starts with user role
+        messages.slice(1).forEach(msg => {
+          contents.push({
+            role: msg.sender === "user" ? "user" : "model",
+            parts: [{ text: msg.text }]
+          });
+        });
+        contents.push({
+          role: "user",
+          parts: [{ text: input }]
+        });
+
+        const response = await axios.post(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
+          {
+            contents,
+            systemInstruction: {
+              parts: [{ text: systemInstruction }]
+            },
+            generationConfig: {
+              maxOutputTokens: 500,
+              temperature: 0.7
+            }
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        );
+        botText = response.data.candidates[0].content.parts[0].text;
+      } else {
+        // Use Groq API
+        const systemMessage = {
+          role: "system",
+          content: `You are Sathi, a helpful and empathetic medical AI assistant. Provide general health information and suggest when to seek medical attention. 
+          Current patient context: ${JSON.stringify(conversationContext)}.
+          Always remind users that you are an AI and they should consult healthcare professionals for medical advice.
+          Be conversational, friendly, and culturally sensitive while maintaining professionalism.
+          Use a warm and caring tone, and occasionally use Hindi/Indian English phrases to make the conversation more relatable.`
+        };
+
+        const conversationHistory = messages.map(msg => ({
+          role: msg.sender === "user" ? "user" : "assistant",
+          content: msg.text
+        }));
+
+        const response = await axios.post(
+          "https://api.groq.com/v1/chat/completions",
+          {
+            model: "mixtral-8x7b-32768",
+            messages: [
+              systemMessage,
+              ...conversationHistory,
+              { role: "user", content: input }
+            ],
+            max_tokens: 500,
+            temperature: 0.7,
+          },
+          {
+            headers: { 
+              Authorization: `Bearer ${API_KEY}`, 
+              "Content-Type": "application/json" 
+            },
+          }
+        );
+        botText = response.data.choices[0].message.content;
+      }
 
       const botResponse = { 
         sender: "bot", 
-        text: response.data.choices[0].message.content,
+        text: botText,
         timestamp: new Date().toISOString()
       };
 

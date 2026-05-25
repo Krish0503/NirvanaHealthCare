@@ -132,7 +132,7 @@ const Dashboard = () => {
             <span className="action-icon">🩺</span>
             <span>Symptom Checker</span>
           </Link>
-          <Link to="/records" className="action-button">
+          <Link to="/patient-records" className="action-button">
             <span className="action-icon">📋</span>
             <span>Medical Records</span>
           </Link>

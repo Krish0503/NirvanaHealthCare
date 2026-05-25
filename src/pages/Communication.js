@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../styles/Communication.css';
 
 const Communication = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('messages');
+
+  useEffect(() => {
+    if (location.pathname.includes('appointments')) {
+      setActiveTab('appointments');
+    } else if (location.pathname.includes('emergency')) {
+      setActiveTab('emergency');
+    } else if (location.pathname.includes('video')) {
+      setActiveTab('video');
+    }
+  }, [location.pathname]);
 
   const communicationTabs = [
     { id: 'messages', label: 'Messages', icon: '💬' },

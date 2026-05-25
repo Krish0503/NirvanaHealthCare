@@ -6,6 +6,8 @@ import SymptomChecker from "./pages/SymptomChecker";
 import HospitalLocator from "./pages/HospitalLocator";
 import VideoCall from "./pages/VideoCall";
 import Dashboard from "./pages/Dashboard";
+import Communication from "./pages/Communication";
+import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import "./App.css";
@@ -22,6 +24,10 @@ function App() {
           <Route path="/symptom-checker" element={<SymptomChecker />} />
           <Route path="/hospital-locator" element={<HospitalLocator />} />
           <Route path="/video-call" element={<VideoCall />} />
+          <Route path="/communication" element={<Communication />} />
+          <Route path="/appointments" element={<Communication />} />
+          <Route path="/emergency" element={<Communication />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
       <Footer />

@@ -2,7 +2,7 @@
   "name": "nirvana-healthcare",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Krish0503.github.io/NirvanaHealthCare",
+  "homepage": ".",
   "dependencies": {
     "axios": "^1.8.4",
     "react": "^18.2.0",

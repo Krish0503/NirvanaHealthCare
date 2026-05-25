@@ -2,7 +2,7 @@
 
 Welcome to **Nirvana HealthCare** – a modern and accessible telemedicine platform focused on improving patient care, enhancing diagnosis through AI, and bridging the healthcare gap for all.
 
-🌐 [Live Demo](https://krish0503.github.io/NirvanaHealthCare/)
+🌐 [Live Demo](https://nirvana-health-care.vercel.app/)
 
 ---
 

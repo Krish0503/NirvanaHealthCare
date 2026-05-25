@@ -1,6 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/HospitalLocator.css';
 
+// Mock data for hospitals (in a real app, this would come from an API)
+const mockHospitals = [
+  {
+    id: 1,
+    name: "City General Hospital",
+    address: "123 Healthcare Ave, City Center",
+    distance: "2.5 km",
+    rating: 4.5,
+    specialties: ["Emergency Care", "Cardiology", "Pediatrics"],
+    emergency: true,
+    covid: true,
+    phone: "(555) 123-4567",
+    website: "www.citygeneral.com",
+    availability: "24/7",
+    image: "https://via.placeholder.com/150"
+  },
+  {
+    id: 2,
+    name: "Medical Center",
+    address: "456 Health Street, Downtown",
+    distance: "3.8 km",
+    rating: 4.2,
+    specialties: ["Orthopedics", "Neurology", "Oncology"],
+    emergency: true,
+    covid: false,
+    phone: "(555) 987-6543",
+    website: "www.medicalcenter.com",
+    availability: "24/7",
+    image: "https://via.placeholder.com/150"
+  },
+  {
+    id: 3,
+    name: "Community Hospital",
+    address: "789 Care Lane, Suburb",
+    distance: "5.2 km",
+    rating: 4.0,
+    specialties: ["Family Medicine", "Dental", "Mental Health"],
+    emergency: false,
+    covid: true,
+    phone: "(555) 456-7890",
+    website: "www.communityhospital.com",
+    availability: "8 AM - 8 PM",
+    image: "https://via.placeholder.com/150"
+  }
+];
+
 const HospitalLocator = () => {
   const [hospitals, setHospitals] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,52 +57,6 @@ const HospitalLocator = () => {
     covid: false,
     specialties: []
   });
-
-  // Mock data for hospitals (in a real app, this would come from an API)
-  const mockHospitals = [
-    {
-      id: 1,
-      name: "City General Hospital",
-      address: "123 Healthcare Ave, City Center",
-      distance: "2.5 km",
-      rating: 4.5,
-      specialties: ["Emergency Care", "Cardiology", "Pediatrics"],
-      emergency: true,
-      covid: true,
-      phone: "(555) 123-4567",
-      website: "www.citygeneral.com",
-      availability: "24/7",
-      image: "https://via.placeholder.com/150"
-    },
-    {
-      id: 2,
-      name: "Medical Center",
-      address: "456 Health Street, Downtown",
-      distance: "3.8 km",
-      rating: 4.2,
-      specialties: ["Orthopedics", "Neurology", "Oncology"],
-      emergency: true,
-      covid: false,
-      phone: "(555) 987-6543",
-      website: "www.medicalcenter.com",
-      availability: "24/7",
-      image: "https://via.placeholder.com/150"
-    },
-    {
-      id: 3,
-      name: "Community Hospital",
-      address: "789 Care Lane, Suburb",
-      distance: "5.2 km",
-      rating: 4.0,
-      specialties: ["Family Medicine", "Dental", "Mental Health"],
-      emergency: false,
-      covid: true,
-      phone: "(555) 456-7890",
-      website: "www.communityhospital.com",
-      availability: "8 AM - 8 PM",
-      image: "https://via.placeholder.com/150"
-    }
-  ];
 
   useEffect(() => {
     // Simulate API call

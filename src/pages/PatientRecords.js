@@ -2,91 +2,81 @@ import React from "react";
 import "../styles/Dashboard.css";
 
 const PatientRecords = () => {
-  // Sample medical history data
   const medicalHistory = [
     {
       id: 1,
       condition: "Hypertension",
-      diagnosedDate: "2022-05-15",
+      diagnosedDate: "2020-03-15",
       status: "Controlled",
       medications: ["Lisinopril 10mg", "Amlodipine 5mg"],
-      notes: "Regular monitoring required"
+      notes: "Regular monitoring required. Blood pressure well controlled with current medication."
     },
     {
       id: 2,
       condition: "Type 2 Diabetes",
-      diagnosedDate: "2021-08-20",
+      diagnosedDate: "2021-06-20",
       status: "Managed",
-      medications: ["Metformin 500mg", "Glimepiride 2mg"],
-      notes: "Blood sugar monitoring daily"
+      medications: ["Metformin 500mg", "Glipizide 5mg"],
+      notes: "HbA1c levels within target range. Continue current treatment plan."
     }
   ];
 
-  // Sample appointment data with enhanced information
   const appointmentHistory = [
     {
       id: 1,
-      date: "2024-03-20",
-      doctor: "Dr. Sarah Smith",
+      date: "2024-02-15",
+      doctor: "Dr. Sarah Wilson",
       department: "Cardiology",
       status: "Completed",
-      notes: "Regular checkup - All vitals normal",
-      nextVisit: "2024-06-20",
+      notes: "Regular checkup. All vitals normal.",
+      nextVisit: "2024-05-15",
       precautions: [
-        "Continue daily blood pressure monitoring",
-        "Maintain low-sodium diet",
+        "Monitor blood pressure daily",
+        "Reduce sodium intake",
         "Exercise 30 minutes daily"
       ]
     },
     {
       id: 2,
-      date: "2024-03-15",
-      doctor: "Dr. Michael Johnson",
-      department: "Orthopedics",
+      date: "2024-01-20",
+      doctor: "Dr. Michael Chen",
+      department: "Endocrinology",
       status: "Completed",
-      notes: "Follow-up for knee pain",
-      nextVisit: "2024-04-15",
+      notes: "Diabetes management review. HbA1c improved.",
+      nextVisit: "2024-04-20",
       precautions: [
-        "Avoid strenuous activities",
-        "Continue physical therapy exercises",
-        "Use knee brace during activities"
+        "Follow diabetic diet plan",
+        "Check blood sugar levels twice daily",
+        "Take medications as prescribed"
       ]
     },
     {
       id: 3,
       date: "2024-03-10",
-      doctor: "Dr. Emily Brown",
-      department: "General Medicine",
-      status: "Completed",
-      notes: "Annual health checkup",
-      nextVisit: "2025-03-10",
-      precautions: [
-        "Maintain healthy diet",
-        "Regular exercise",
-        "Annual blood work required"
-      ]
+      doctor: "Dr. Sarah Wilson",
+      department: "Cardiology",
+      status: "Scheduled",
+      notes: "Follow-up for blood pressure assessment",
+      nextVisit: null,
+      precautions: ["Continue current medications", "Maintain exercise routine"]
     },
     {
       id: 4,
-      date: "2024-04-01",
-      doctor: "Dr. David Wilson",
-      department: "Dermatology",
+      date: "2024-03-25",
+      doctor: "Dr. Emily Roberts",
+      department: "General Medicine",
       status: "Scheduled",
-      notes: "Skin condition follow-up",
-      nextVisit: "2024-05-01",
-      precautions: [
-        "Continue prescribed cream application",
-        "Avoid direct sun exposure",
-        "Use SPF 50+ sunscreen"
-      ]
+      notes: "Annual comprehensive health screening",
+      nextVisit: null,
+      precautions: ["Fast for 12 hours before appointment", "Bring previous lab reports"]
     }
   ];
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container" style={{ paddingTop: 'var(--navbar-height)' }}>
       <div className="dashboard-header">
         <h1>Patient Records</h1>
-        <p>View your medical history and appointments</p>
+        <p>Your complete medical history and appointments</p>
       </div>
 
       <div className="dashboard-section">
@@ -123,18 +113,18 @@ const PatientRecords = () => {
               </div>
               <div className="appointment-details">
                 <h3>{appointment.doctor}</h3>
-                <p className="department">{appointment.department}</p>
+                <span className="department">{appointment.department}</span>
                 <p className="notes">{appointment.notes}</p>
-                <div className="appointment-additional-info">
+                {appointment.nextVisit && (
                   <p><strong>Next Visit:</strong> {appointment.nextVisit}</p>
-                  <div className="precautions">
-                    <strong>Precautions:</strong>
-                    <ul>
-                      {appointment.precautions.map((precaution, index) => (
-                        <li key={index}>{precaution}</li>
-                      ))}
-                    </ul>
-                  </div>
+                )}
+                <div className="appointment-additional-info">
+                  <h4>Precautions</h4>
+                  <ul className="precautions">
+                    {appointment.precautions.map((precaution, index) => (
+                      <li key={index}>{precaution}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>

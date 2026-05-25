@@ -99,7 +99,7 @@ const VideoCall = () => {
   };
 
   return (
-    <div className="video-call-container">
+    <div className="video-call-container" style={{paddingTop: 'var(--navbar-height)'}}>
       <div className="video-call-header">
         <div className="header-content">
           <h1>Video Consultation</h1>

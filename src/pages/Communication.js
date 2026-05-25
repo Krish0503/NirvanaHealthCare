@@ -12,7 +12,7 @@ const Communication = () => {
   ];
 
   return (
-    <div className="communication-container">
+    <div className="communication-container" style={{paddingTop: 'var(--navbar-height)'}}>
       <div className="communication-header">
         <h1>Communication Center</h1>
         <p>Connect with healthcare providers and manage your appointments</p>

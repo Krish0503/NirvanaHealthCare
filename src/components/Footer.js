@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/Footer.css";
 
 const Footer = () => {
@@ -6,20 +7,20 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-section">
-          <h3>Nirvana Healthcare</h3>
+          <h3><span className="footer-brand-accent">N</span>irvana Healthcare</h3>
           <p>Achieve Wellness, Attain Nirvana</p>
         </div>
         <div className="footer-section">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/symptom-checker">Symptom Checker</a></li>
-            <li><a href="/patient-records">Patient Records</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/dashboard">Dashboard</Link></li>
+            <li><Link to="/symptom-checker">Symptom Checker</Link></li>
+            <li><Link to="/patient-records">Records</Link></li>
           </ul>
         </div>
         <div className="footer-section">
-          <h3>Contact Us</h3>
+          <h3>Contact</h3>
           <p>Email: support@nirvanahealthcare.com</p>
           <p>Phone: (555) 123-4567</p>
         </div>

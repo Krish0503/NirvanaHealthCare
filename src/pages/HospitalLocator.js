@@ -94,7 +94,7 @@ const HospitalLocator = () => {
   };
 
   return (
-    <div className="hospital-locator-container">
+    <div className="hospital-locator-container" style={{paddingTop: 'var(--navbar-height)'}}>
       <div className="search-section">
         <h1>Find Hospitals Near You</h1>
         <div className="search-box">

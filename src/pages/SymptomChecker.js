@@ -164,7 +164,7 @@ const SymptomChecker = () => {
   };
 
   return (
-    <div className="symptom-checker-container">
+    <div className="symptom-checker-container" style={{paddingTop: 'var(--navbar-height)'}}>
       <div className="chat-header">
         <h1>Sathi - Your Health Companion</h1>
         <p>Get personalized health guidance and information. Remember, this is not a replacement for professional medical advice.</p>
@@ -221,5 +221,3 @@ const SymptomChecker = () => {
 };
 
 export default SymptomChecker;
-
-

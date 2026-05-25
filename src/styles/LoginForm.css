@@ -1,3 +1,4 @@
+/* ===== Login Form (inline navbar variant) ===== */
 .login-form {
   display: flex;
   gap: 0.5rem;
@@ -9,45 +10,75 @@
 }
 
 .form-group input {
-  padding: 0.5rem 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  width: 200px;
-  transition: border-color 0.3s ease;
+  background: var(--bg-tertiary);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  width: 140px;
+  color: var(--text-primary);
+  transition: all var(--transition-base);
+  font-family: inherit;
+}
+
+.form-group input::placeholder {
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #3498db;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  background: var(--bg-secondary);
 }
 
+/* ===== Login Button ===== */
 .login-button {
-  background: #3498db;
-  color: white;
+  background: var(--accent-gradient);
+  color: var(--text-inverse);
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: var(--radius-sm);
   font-weight: 500;
-  transition: background-color 0.3s ease;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  font-family: inherit;
 }
 
 .login-button:hover {
-  background: #2980b9;
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-1px);
 }
 
+.login-button:active {
+  transform: translateY(0);
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .login-form {
     flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .form-group {
     width: 100%;
   }
 
   .form-group input {
     width: 100%;
+    box-sizing: border-box;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
   }
 
   .login-button {
     width: 100%;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
   }
-} 
+}

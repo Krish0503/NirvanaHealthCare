@@ -265,6 +265,129 @@
 }
 
 /* ============================================================
+   Interactive Medicine Tracker
+   ============================================================ */
+.med-tracker-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.med-add-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.med-add-form input {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.65rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-primary);
+  font-size: 0.9rem;
+}
+
+.med-add-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.med-add-form button {
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--accent-gradient);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all var(--transition-fast);
+}
+
+.med-add-form button:hover:not(:disabled) {
+  box-shadow: var(--shadow-accent);
+}
+
+.med-add-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.med-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.med-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.1rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--accent);
+  transition: all var(--transition-fast);
+}
+
+.med-item.med-taken {
+  border-left-color: var(--success);
+  opacity: 0.65;
+}
+
+.med-item.med-taken .med-name {
+  text-decoration: line-through;
+}
+
+.med-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  flex: 1;
+}
+
+.med-info input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--success);
+}
+
+.med-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: block;
+}
+
+.med-time {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.med-del-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.med-del-btn:hover {
+  opacity: 1;
+}
+
+.med-empty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* ============================================================
    Patient Records — Medical History & Appointments
    ============================================================ */
 

@@ -1,43 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "../styles/Dashboard.css";
 
+const API_URL = "http://localhost:5000";
+
 const Dashboard = () => {
-  const healthMetrics = {
-    appointments: 3,
-    prescriptions: 5,
-    upcomingTests: 2,
-    notifications: 4
+  const [appointmentCount, setAppointmentCount] = useState(0);
+
+  /* ── Interactive Medicine Reminders (stored in localStorage) ── */
+  const [medications, setMedications] = useState(() => {
+    const saved = localStorage.getItem("nirvana_medications");
+    return saved
+      ? JSON.parse(saved)
+      : [
+          { id: 1, name: "Amlodipine 5mg", time: "08:00 AM", taken: false },
+          { id: 2, name: "Metformin 500mg", time: "01:00 PM", taken: true },
+          { id: 3, name: "Multivitamin", time: "08:00 PM", taken: false },
+        ];
+  });
+
+  const [newMedName, setNewMedName] = useState("");
+  const [newMedTime, setNewMedTime] = useState("");
+
+  /* ── Save medications to localStorage ── */
+  useEffect(() => {
+    localStorage.setItem("nirvana_medications", JSON.stringify(medications));
+  }, [medications]);
+
+  /* ── Fetch live appointment count ── */
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/api/appointments`);
+        setAppointmentCount(res.data.length);
+      } catch (err) {
+        console.warn("Backend offline — using default stats count");
+      }
+    };
+    fetchStats();
+  }, []);
+
+  const toggleMedication = (id) => {
+    setMedications((prev) =>
+      prev.map((med) => (med.id === id ? { ...med, taken: !med.taken } : med))
+    );
   };
 
-  const patientProfile = {
-    name: "John Doe",
-    age: 45,
-    gender: "Male",
-    bloodGroup: "O+",
-    lastVisit: "2024-02-15",
-    primaryDoctor: "Dr. Sarah Wilson",
-    department: "Cardiology",
-    contact: "+1 (555) 123-4567",
-    email: "john.doe@email.com"
+  const handleAddMedication = (e) => {
+    e.preventDefault();
+    if (!newMedName.trim() || !newMedTime) return;
+    const newMed = {
+      id: Date.now(),
+      name: newMedName.trim(),
+      time: newMedTime,
+      taken: false,
+    };
+    setMedications((prev) => [...prev, newMed]);
+    setNewMedName("");
+    setNewMedTime("");
   };
 
-  const doctorProfile = {
-    name: "Dr. Sarah Wilson",
-    specialization: "Cardiologist",
-    experience: "15 years",
-    education: "MD - Harvard Medical School",
-    availability: "Mon - Fri, 9:00 AM - 5:00 PM",
-    rating: 4.8,
-    patients: 1200,
-    image: "https://via.placeholder.com/150"
+  const handleDeleteMedication = (id) => {
+    setMedications((prev) => prev.filter((m) => m.id !== id));
   };
-
-  const recentActivities = [
-    { date: "2024-02-15", activity: "Completed annual health checkup" },
-    { date: "2024-02-10", activity: "Prescription renewed for blood pressure medication" },
-    { date: "2024-02-05", activity: "Lab results received - All within normal range" }
-  ];
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -47,90 +73,113 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard-container" style={{ paddingTop: 'var(--navbar-height)' }}>
+    <div className="dashboard-container" style={{ paddingTop: "var(--navbar-height)" }}>
+      {/* Header */}
       <div className="dashboard-header">
         <div className="greeting-section">
-          <h1>{getGreeting()}, {patientProfile.name} 👋</h1>
-          <p>Here's your health overview for today</p>
+          <h1>{getGreeting()}, Patient 👋</h1>
+          <p>Here is your personal health metrics & daily medication overview</p>
         </div>
       </div>
 
+      {/* Live Stats */}
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-icon">📅</div>
           <div className="stat-info">
-            <span className="stat-number">{healthMetrics.appointments}</span>
-            <span className="stat-label">Appointments</span>
+            <span className="stat-number">{appointmentCount}</span>
+            <span className="stat-label">Booked Appointments</span>
           </div>
         </div>
         <div className="stat-card">
           <div className="stat-icon">💊</div>
           <div className="stat-info">
-            <span className="stat-number">{healthMetrics.prescriptions}</span>
-            <span className="stat-label">Prescriptions</span>
+            <span className="stat-number">{medications.length}</span>
+            <span className="stat-label">Daily Medications</span>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon">🔬</div>
+          <div className="stat-icon">✅</div>
           <div className="stat-info">
-            <span className="stat-number">{healthMetrics.upcomingTests}</span>
-            <span className="stat-label">Upcoming Tests</span>
+            <span className="stat-number">
+              {medications.filter((m) => m.taken).length} / {medications.length}
+            </span>
+            <span className="stat-label">Doses Taken Today</span>
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon">🔔</div>
+          <div className="stat-icon">🩺</div>
           <div className="stat-info">
-            <span className="stat-number">{healthMetrics.notifications}</span>
-            <span className="stat-label">Notifications</span>
+            <span className="stat-number">15</span>
+            <span className="stat-label">Specialist Doctors</span>
           </div>
         </div>
       </div>
 
-      <div className="dashboard-section profile-section">
-        <h2>Patient Profile</h2>
-        <div className="profile-card">
-          <div className="profile-info">
-            <div className="profile-header">
-              <h3>{patientProfile.name}</h3>
-              <span className="age">{patientProfile.age} years | {patientProfile.gender}</span>
-            </div>
-            <div className="profile-details">
-              <p><strong>Blood Group:</strong> {patientProfile.bloodGroup}</p>
-              <p><strong>Last Visit:</strong> {patientProfile.lastVisit}</p>
-              <p><strong>Primary Doctor:</strong> {patientProfile.primaryDoctor}</p>
-              <p><strong>Department:</strong> {patientProfile.department}</p>
-              <p><strong>Contact:</strong> {patientProfile.contact}</p>
-              <p><strong>Email:</strong> {patientProfile.email}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="dashboard-section doctor-section">
-        <h2>Your Doctor</h2>
-        <div className="doctor-card">
-          <div className="doctor-info">
-            <div className="doctor-header">
-              <h3>{doctorProfile.name}</h3>
-              <span className="specialization">{doctorProfile.specialization}</span>
-            </div>
-            <div className="doctor-details">
-              <p><strong>Experience:</strong> {doctorProfile.experience}</p>
-              <p><strong>Education:</strong> {doctorProfile.education}</p>
-              <p><strong>Availability:</strong> {doctorProfile.availability}</p>
-              <p><strong>Patients Treated:</strong> {doctorProfile.patients}+</p>
-              <p className="rating">⭐ {doctorProfile.rating} / 5.0</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      {/* Interactive Medicine Tracker */}
       <div className="dashboard-section">
-        <h2>Quick Actions</h2>
+        <h2>💊 Interactive Daily Medicine Tracker</h2>
+        <div className="med-tracker-card">
+          <form onSubmit={handleAddMedication} className="med-add-form">
+            <input
+              type="text"
+              placeholder="Medicine name (e.g. Paracetamol 500mg)"
+              value={newMedName}
+              onChange={(e) => setNewMedName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Schedule Time (e.g. 09:00 AM)"
+              value={newMedTime}
+              onChange={(e) => setNewMedTime(e.target.value)}
+            />
+            <button type="submit" disabled={!newMedName.trim() || !newMedTime}>
+              + Add Reminder
+            </button>
+          </form>
+
+          <div className="med-list">
+            {medications.length === 0 ? (
+              <p className="med-empty">No medicine reminders added yet.</p>
+            ) : (
+              medications.map((med) => (
+                <div key={med.id} className={`med-item ${med.taken ? "med-taken" : ""}`}>
+                  <div className="med-info" onClick={() => toggleMedication(med.id)}>
+                    <input
+                      type="checkbox"
+                      checked={med.taken}
+                      onChange={() => toggleMedication(med.id)}
+                    />
+                    <div>
+                      <span className="med-name">{med.name}</span>
+                      <span className="med-time">⏰ {med.time}</span>
+                    </div>
+                  </div>
+                  <button
+                    className="med-del-btn"
+                    onClick={() => handleDeleteMedication(med.id)}
+                    title="Delete Reminder"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Navigation Actions */}
+      <div className="dashboard-section">
+        <h2>⚡ Quick Actions</h2>
         <div className="quick-actions">
+          <Link to="/doctors" className="action-button">
+            <span className="action-icon">👨‍⚕️</span>
+            <span>Book Doctor</span>
+          </Link>
           <Link to="/symptom-checker" className="action-button">
             <span className="action-icon">🩺</span>
-            <span>Symptom Checker</span>
+            <span>AI Symptom Checker</span>
           </Link>
           <Link to="/patient-records" className="action-button">
             <span className="action-icon">📋</span>
@@ -142,47 +191,8 @@ const Dashboard = () => {
           </Link>
           <Link to="/video-call" className="action-button">
             <span className="action-icon">📹</span>
-            <span>Video Call</span>
+            <span>Video Consultation</span>
           </Link>
-        </div>
-      </div>
-
-      <div className="dashboard-section">
-        <h2>Recent Activity</h2>
-        <div className="activities-list">
-          {recentActivities.map((activity, index) => (
-            <div key={index} className="activity-item">
-              <span className="activity-date">{activity.date}</span>
-              <span className="activity-description">{activity.activity}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="dashboard-section">
-        <h2>Health Reminders</h2>
-        <div className="reminders-list">
-          <div className="reminder-item">
-            <span className="reminder-icon">💊</span>
-            <div>
-              <h4>Medication Due</h4>
-              <p>Take blood pressure medication at 8:00 PM</p>
-            </div>
-          </div>
-          <div className="reminder-item">
-            <span className="reminder-icon">📋</span>
-            <div>
-              <h4>Upcoming Check-up</h4>
-              <p>Annual physical examination on March 15, 2024</p>
-            </div>
-          </div>
-          <div className="reminder-item">
-            <span className="reminder-icon">💉</span>
-            <div>
-              <h4>Vaccination Reminder</h4>
-              <p>Flu shot due next month</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/Dashboard.css";
 
@@ -8,6 +9,13 @@ const PatientRecords = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [currentUser] = useState(() => {
+    const saved = localStorage.getItem("nirvana_user");
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  const [searchName, setSearchName] = useState(currentUser?.name || "");
 
   const medicalHistory = [
     {
@@ -43,15 +51,127 @@ const PatientRecords = () => {
     fetchAppointments();
   }, []);
 
+  /* ── Filter appointments by search name ── */
+  const filteredAppointments = appointments.filter((app) =>
+    searchName
+      ? app.patient_name.toLowerCase().includes(searchName.toLowerCase())
+      : true
+  );
+
+  /* ── Export records to downloadable file ── */
+  const handleExportRecords = () => {
+    const patientName = currentUser?.name || searchName || "Patient";
+    let content = `====================================================\n`;
+    content += `NIRVANA HEALTHCARE - OFFICIAL MEDICAL RECORDS SUMMARY\n`;
+    content += `Generated Date: ${new Date().toLocaleDateString()}\n`;
+    content += `Patient: ${patientName}\n`;
+    content += `====================================================\n\n`;
+
+    content += `[ MEDICAL HISTORY ]\n`;
+    medicalHistory.forEach((item) => {
+      content += `- Condition: ${item.condition} (${item.status})\n`;
+      content += `  Diagnosed Date: ${item.diagnosedDate}\n`;
+      content += `  Medications: ${item.medications.join(", ")}\n`;
+      content += `  Notes: ${item.notes}\n\n`;
+    });
+
+    content += `[ BOOKED APPOINTMENTS (${filteredAppointments.length}) ]\n`;
+    if (filteredAppointments.length === 0) {
+      content += `No booked appointments found.\n`;
+    } else {
+      filteredAppointments.forEach((app) => {
+        content += `- Appointment ID: #${app.id}\n`;
+        content += `  Doctor: ${app.doctor_name || `Doctor #${app.doctor_id}`}\n`;
+        content += `  Patient Name: ${app.patient_name}\n`;
+        content += `  Slot Time: ${app.slot_time}\n`;
+        content += `  Status: ${app.status}\n\n`;
+      });
+    }
+
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `Medical_Records_${patientName.replace(/\s+/g, "_")}.txt`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="dashboard-container" style={{ paddingTop: 'var(--navbar-height)' }}>
-      <div className="dashboard-header">
-        <h1>Patient Records</h1>
-        <p>Your complete medical history and live appointment database</p>
+      {/* Header */}
+      <div className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h1>Patient Records & History</h1>
+          <p>
+            {currentUser
+              ? `Showing authenticated records for ${currentUser.name}`
+              : "Search patient records or sign in to view your account"}
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          {!currentUser && (
+            <Link to="/login" className="nav-login-btn" style={{ padding: '0.6rem 1.2rem', textDecoration: 'none' }}>
+              Sign In to Patient Portal
+            </Link>
+          )}
+          <button
+            onClick={handleExportRecords}
+            style={{
+              padding: '0.6rem 1.2rem',
+              borderRadius: 'var(--radius-full)',
+              background: 'var(--bg-tertiary)',
+              border: '1px solid var(--border-strong)',
+              fontWeight: '600',
+              cursor: 'pointer',
+              fontSize: '0.85rem'
+            }}
+          >
+            📥 Export Records (.txt)
+          </button>
+        </div>
       </div>
 
+      {/* Patient Search Filter Bar */}
+      <div className="med-tracker-card" style={{ margin: '1.5rem 0 2rem', padding: '1rem 1.25rem' }}>
+        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>🔍 Patient Filter:</span>
+          <input
+            type="text"
+            placeholder="Type patient name to filter appointments..."
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+            style={{
+              flex: 1,
+              minWidth: '220px',
+              padding: '0.55rem 0.9rem',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border-strong)',
+              background: 'var(--bg-primary)',
+              fontSize: '0.9rem'
+            }}
+          />
+          {searchName && (
+            <button
+              onClick={() => setSearchName("")}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--accent)',
+                fontWeight: '600',
+                cursor: 'pointer',
+                fontSize: '0.85rem'
+              }}
+            >
+              Clear Filter
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Medical History */}
       <div className="dashboard-section">
-        <h2>Medical History</h2>
+        <h2>Medical History & Conditions</h2>
         <div className="medical-history-list">
           {medicalHistory.map((condition) => (
             <div key={condition.id} className="medical-history-card">
@@ -71,20 +191,34 @@ const PatientRecords = () => {
         </div>
       </div>
 
+      {/* Live Booked Appointments */}
       <div className="dashboard-section">
-        <h2>Booked Appointments (Live DB)</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2>Booked Appointments (Live DB)</h2>
+          <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+            {filteredAppointments.length} record(s) found
+          </span>
+        </div>
+
         {loading ? (
           <p>Loading appointments from database...</p>
         ) : error ? (
           <p style={{ color: 'var(--danger)' }}>{error}</p>
-        ) : appointments.length === 0 ? (
-          <p>No appointments booked yet. Visit the Doctors tab to book one!</p>
+        ) : filteredAppointments.length === 0 ? (
+          <div className="med-tracker-card" style={{ textAlign: 'center', padding: '2.5rem' }}>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+              No appointments found {searchName ? `matching "${searchName}"` : ""}.
+            </p>
+            <Link to="/doctors" className="dl-card-book" style={{ textDecoration: 'none', display: 'inline-block', width: 'auto', padding: '0.6rem 1.5rem' }}>
+              Book an Appointment Now
+            </Link>
+          </div>
         ) : (
           <div className="appointment-list">
-            {appointments.map((appointment) => (
+            {filteredAppointments.map((appointment) => (
               <div key={appointment.id} className="appointment-card">
                 <div className="appointment-date">
-                  <span className="date">{appointment.slot_time}</span>
+                  <span className="date">⏰ {appointment.slot_time}</span>
                   <span className={`status ${appointment.status.toLowerCase()}`}>
                     {appointment.status}
                   </span>

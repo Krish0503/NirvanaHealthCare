@@ -9,7 +9,7 @@ from flask_cors import CORS
 
 from config import Config
 from models import db
-from routes import doctors_bp, appointments_bp, predict_bp
+from routes import doctors_bp, appointments_bp, predict_bp, auth_bp
 
 
 def create_app():
@@ -31,7 +31,9 @@ def create_app():
             "endpoints": {
                 "doctors": "/api/doctors",
                 "appointments": "/api/appointments",
-                "predict": "/api/predict"
+                "predict": "/api/predict",
+                "auth_login": "/api/auth/login",
+                "auth_register": "/api/auth/register"
             }
         })
 
@@ -39,12 +41,14 @@ def create_app():
     app.register_blueprint(doctors_bp)
     app.register_blueprint(appointments_bp)
     app.register_blueprint(predict_bp)
+    app.register_blueprint(auth_bp)
 
     # Create tables on first run
     with app.app_context():
         # Import models so SQLAlchemy sees them
         from models.doctor import Doctor        # noqa: F401
         from models.appointment import Appointment  # noqa: F401
+        from models.user import User            # noqa: F401
         db.create_all()
 
     return app

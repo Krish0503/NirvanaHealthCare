@@ -5,6 +5,7 @@ from models.doctor import Doctor
 from models.appointment import Appointment
 
 from .predict import predict_bp
+from .auth import auth_bp
 
 doctors_bp = Blueprint("doctors", __name__)
 appointments_bp = Blueprint("appointments", __name__)

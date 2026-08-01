@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/SymptomChecker.css';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://nirvana-backend-z68n.onrender.com';
 
 const SYMPTOM_CATEGORIES = [
   {

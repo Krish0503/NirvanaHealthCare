@@ -16,8 +16,8 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Enable CORS so React dev server (port 3000) can call the API
-    CORS(app, origins=["http://localhost:3000"])
+    # Enable CORS for deployed frontend (Vercel) and local dev
+    CORS(app, origins=["https://nirvana-healthcare.vercel.app", "http://localhost:3000"])
 
     # Initialise database
     db.init_app(app)

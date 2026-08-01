@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/Dashboard.css";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://nirvana-backend-z68n.onrender.com";
 
 const PatientRecords = () => {
   const [appointments, setAppointments] = useState([]);

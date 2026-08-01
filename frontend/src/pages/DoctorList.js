@@ -3,7 +3,7 @@ import axios from 'axios';
 import BookingForm from './BookingForm';
 import '../styles/DoctorList.css';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://nirvana-backend-z68n.onrender.com';
 
 const DoctorList = () => {
   const [doctors, setDoctors] = useState([]);

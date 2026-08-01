@@ -1,0 +1,303 @@
+/* ============================================
+   DOCTOR LIST PAGE
+   ============================================ */
+
+.dl-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* ── Header ── */
+.dl-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dl-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.dl-header p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+}
+
+/* ── Toolbar ── */
+.dl-toolbar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.dl-search {
+  flex: 1;
+  min-width: 250px;
+  position: relative;
+}
+
+.dl-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.dl-search input {
+  width: 100%;
+  padding: 0.7rem 1rem 0.7rem 2.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-secondary);
+  font-size: 0.95rem;
+  transition: border-color var(--transition-fast);
+}
+
+.dl-search input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.dl-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dl-filter label {
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.dl-filter select {
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-secondary);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.dl-filter select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ── Count ── */
+.dl-count {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Grid ── */
+.dl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── Card ── */
+.dl-card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all var(--transition-base);
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+
+.dl-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-medium);
+}
+
+/* ── Avatar ── */
+.dl-card-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-accent);
+}
+
+/* ── Card body ── */
+.dl-card-body {
+  flex: 1;
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.dl-card-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.dl-card-spec {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: var(--accent-soft);
+  color: var(--accent);
+  margin-bottom: 0.65rem;
+}
+
+.dl-card-hospital {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.dl-card-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+
+.dl-card-exp {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.dl-card-fee {
+  font-weight: 700;
+  color: var(--success);
+  background: var(--success-soft);
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+/* ── Book button ── */
+.dl-card-book {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: var(--radius-md);
+  background: var(--accent-gradient);
+  color: var(--text-inverse);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.dl-card-book:hover {
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-1px);
+}
+
+/* ── Loading ── */
+.dl-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1rem;
+  color: var(--text-secondary);
+}
+
+.dl-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-strong);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ── Error ── */
+.dl-error {
+  text-align: center;
+  padding: 4rem 2rem;
+  max-width: 500px;
+  margin: 4rem auto;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.dl-error-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.dl-error h2 {
+  margin-bottom: 0.75rem;
+}
+
+.dl-error p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.dl-error pre {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+/* ── Empty ── */
+.dl-empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+}
+
+.dl-empty span {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .dl-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .dl-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dl-toolbar {
+    flex-direction: column;
+  }
+}

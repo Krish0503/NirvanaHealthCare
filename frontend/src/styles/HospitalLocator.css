@@ -1,0 +1,295 @@
+/* ============================================
+   HOSPITAL LOCATOR — Split Panel Layout
+   ============================================ */
+
+/* ── Container ─────────────────────────────── */
+.hospital-locator-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* ── Header ────────────────────────────────── */
+.hl-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.hl-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.hl-header p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 540px;
+  margin: 0 auto 1.25rem;
+}
+
+/* ── Controls ──────────────────────────────── */
+.hl-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.hl-controls label {
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.hl-controls select {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.hl-controls select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* ── Error banner ──────────────────────────── */
+.hl-error {
+  background: var(--warning-soft);
+  color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* ── Split panel ───────────────────────────── */
+.hl-split {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 1.5rem;
+  height: 600px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ── Map ───────────────────────────────────── */
+.hl-map-wrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.hl-map {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+/* ── List panel ────────────────────────────── */
+.hl-list-wrapper {
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hl-list-title {
+  padding: 1.25rem 1.5rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.hl-count {
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: var(--accent-soft);
+  color: var(--accent);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+/* ── List ──────────────────────────────────── */
+.hl-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* ── Card ──────────────────────────────────── */
+.hl-card {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-left var(--transition-fast);
+  border-left: 3px solid transparent;
+}
+
+.hl-card:hover {
+  background: var(--bg-tertiary);
+}
+
+.hl-card--active {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
+}
+
+.hl-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.hl-card-top h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* ── Hospital type badge ───────────────────── */
+.hl-type {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.hl-type.hospital {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.hl-type.clinic {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+/* ── Extras row (emergency, phone) ─────────── */
+.hl-extras {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.65rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.hl-emergency-tag {
+  font-weight: 600;
+  color: var(--danger);
+}
+
+/* ── Custom user marker (pulsing dot) ──────── */
+.hl-user-marker {
+  background: none !important;
+  border: none !important;
+}
+
+.hl-user-dot {
+  width: 16px;
+  height: 16px;
+  background: #6C63FF;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 0 8px rgba(108, 99, 255, 0.5);
+  position: relative;
+}
+
+.hl-user-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(108, 99, 255, 0.2);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* ── Leaflet overrides ─────────────────────── */
+.leaflet-container {
+  font-family: 'Inter', -apple-system, sans-serif !important;
+  border-radius: var(--radius-lg);
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px !important;
+  line-height: 1.5 !important;
+}
+
+/* ── Responsive ────────────────────────────── */
+@media (max-width: 900px) {
+  .hl-split {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .hl-map-wrapper {
+    height: 350px;
+  }
+
+  .hl-list-wrapper {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hl-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .hl-card {
+    padding: 1rem;
+  }
+
+  .hl-actions {
+    flex-direction: column;
+  }
+}

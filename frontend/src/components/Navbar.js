@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import LoginForm from "./LoginForm";
+import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -15,11 +13,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    navigate("/login");
-  };
 
   return (
     <>
@@ -42,16 +35,9 @@ const Navbar = () => {
           <div className="navbar-links">
             <Link to="/" className="nav-link" onClick={() => setIsMenuOpen(false)}>Home</Link>
             <Link to="/dashboard" className="nav-link" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
+            <Link to="/doctors" className="nav-link" onClick={() => setIsMenuOpen(false)}>Doctors</Link>
             <Link to="/symptom-checker" className="nav-link" onClick={() => setIsMenuOpen(false)}>Symptom Checker</Link>
-            <Link to="/patient-records" className="nav-link" onClick={() => setIsMenuOpen(false)}>Records</Link>
             <Link to="/hospital-locator" className="nav-link" onClick={() => setIsMenuOpen(false)}>Hospital Locator</Link>
-            <Link to="/video-call" className="nav-link" onClick={() => setIsMenuOpen(false)}>Video Call</Link>
-          </div>
-          <div className="navbar-actions">
-            <LoginForm />
-            <button className="logout-button" onClick={handleLogout}>
-              Logout
-            </button>
           </div>
         </div>
       </nav>
@@ -61,3 +47,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

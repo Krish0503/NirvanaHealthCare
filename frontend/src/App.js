@@ -8,13 +8,16 @@ import VideoCall from "./pages/VideoCall";
 import Dashboard from "./pages/Dashboard";
 import Communication from "./pages/Communication";
 import Login from "./pages/Login";
+import DoctorList from "./pages/DoctorList";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 import "./App.css";
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
       <div className="container mx-auto px-4 py-6">
         <Routes>
@@ -25,7 +28,8 @@ function App() {
           <Route path="/hospital-locator" element={<HospitalLocator />} />
           <Route path="/video-call" element={<VideoCall />} />
           <Route path="/communication" element={<Communication />} />
-          <Route path="/appointments" element={<Communication />} />
+          <Route path="/doctors" element={<DoctorList />} />
+          <Route path="/appointments" element={<DoctorList />} />
           <Route path="/emergency" element={<Communication />} />
           <Route path="/login" element={<Login />} />
         </Routes>
